@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benim Portfolyo & Blog</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f9f9fb;
+      margin: 0;
+      color: #222;
+    }
+
+    header {
+      background: #007acc;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      animation: fadeInDown 1s ease-in;
+    }
+
+    h1 { margin: 0; font-size: 2.5em; }
+    h2 { color: #007acc; margin-top: 40px; }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    section { margin-bottom: 60px; }
+
+    a { color: #007acc; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #005b99; }
+
+    ul { line-height: 1.7; }
+
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+      padding: 30px;
+      background: #f0f0f0;
+    }
+
+    /* Basit animasyonlar */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .post {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+
+    .post:hover {
+      transform: scale(1.02);
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Merhaba, ben <span style="color:#ffe680;">Senin Adın</span></h1>
+    <p>Yazılım geliştirici • Tasarım meraklısı • Blog yazarı</p>
+  </header>
+
+  <main>
+    <section id="hakkimda" class="fade">
+      <h2>📄 Hakkımda</h2>
+      <p>Merhaba! Ben teknolojiye, tasarıma ve yazılıma meraklı bir geliştiriciyim. 
+      Web teknolojileri, Java, Python ve yaratıcı dijital içeriklerle uğraşmayı seviyorum.</p>
+    </section>
+
+    <section id="projeler" class="fade">
+      <h2>🧰 Projeler</h2>
+      <ul>
+        <li><a href="#">Mini Java oyunu</a> – Basit 2D oyun, Swing kullanılarak geliştirildi.</li>
+        <li><a href="#">Kişisel Blog Motoru</a> – Markdown destekli mini CMS projesi.</li>
+        <li><a href="#">Portfolyo Sitesi</a> – HTML, CSS, JS ile sade ama etkili tasarım.</li>
+      </ul>
+    </section>
+
+    <section id="blog" class="fade">
+      <h2>📝 Blog</h2>
+
+      <div class="post">
+        <h3>Yapay Zekâ ile Web Tasarımı</h3>
+        <p>AI artık sadece içerik üretmiyor, tasarımı da şekillendiriyor. Tasarım trendlerine nasıl yansıyor? Bu yazıda inceliyoruz.</p>
+      </div>
+
+      <div class="post">
+        <h3>Java'da Basit Oyun Döngüsü Nasıl Kurulur?</h3>
+        <p>Game loop mantığını ve FPS sabitlemeyi adım adım anlatan kısa bir rehber.</p>
+      </div>
+    </section>
+
+    <section id="iletisim" class="fade">
+      <h2>✉️ İletişim</h2>
+      <p>Bana ulaşmak için: <a href="mailto:sen@ornekmail.com">sen@ornekmail.com</a></p>
+      <p>GitHub: <a href="https://github.com/kullaniciadi">github.com/kullaniciadi</a></p>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Senin Adın – Tüm Hakları Saklıdır.
+  </footer>
+
+  <script>
+    // Sayfa kaydırıldıkça fade animasyonu aktif et
+    const faders = document.querySelectorAll('.fade');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+    faders.forEach(fade => observer.observe(fade));
+  </script>
+</body>
+</html>
