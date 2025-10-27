@@ -1,248 +1,416 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CakoWeb | Kişisel Web Sitesi</title>
-  <style>
-    :root {
-      --primary: #0078d4;
-      --bg: #f9f9fb;
-      --text: #222;
-    }
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-    }
-    nav h1 {
-      color: var(--primary);
-      margin: 0;
-      font-size: 1.4em;
-      cursor: pointer;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-      margin: 0;
-      padding: 0;
-    }
-    nav a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      position: relative;
-    }
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      left: 0;
-      bottom: -3px;
-      transition: 0.3s;
-    }
-    nav a:hover::after {
-      width: 100%;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CakoWeb — Cyber·Portfolio</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#05060a;
+    --panel: rgba(10,10,15,0.6);
+    --neon-1: #ff6a00; /* turuncu */
+    --neon-2: #00e5ff; /* cyan */
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#020205 0%, #071026 60%);color:#e6eef8}
+  header{
+    position:fixed;left:0;right:0;top:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:12px 28px;
+    backdrop-filter: blur(6px); background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));
+    border-bottom:1px solid rgba(255,255,255,0.04); z-index:999;
+  }
+  .brand{display:flex;gap:14px;align-items:center;cursor:pointer}
+  .logo {
+    width:48px;height:48px;border-radius:10px;background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 10%),
+      linear-gradient(135deg,var(--neon-2),#6a00ff);
+    display:flex;align-items:center;justify-content:center;box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 18px rgba(0,225,255,0.06);
+    color:#050609;font-weight:700;font-size:18px;
+  }
+  nav{display:flex;gap:12px;align-items:center}
+  nav a{color:#cfefff;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;opacity:0.95}
+  nav a:hover{background:linear-gradient(90deg, rgba(0,230,255,0.08), rgba(255,106,0,0.04));transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+  .wrap{max-width:1200px;margin:120px auto 80px;padding:20px}
+  .hero{
+    display:grid;grid-template-columns: 1fr 420px;gap:28px;align-items:center;
+  }
+  .intro{padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;box-shadow: 0 8px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);}
+  .intro h1{font-size:36px;margin:0 0 10px;background:linear-gradient(90deg,var(--neon-1),var(--neon-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .intro p{color:#bcdcee;margin:0 0 18px;line-height:1.5}
+  .cta-group{display:flex;gap:12px}
+  .btn{
+    padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
+    color:#e6f9ff;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.5)
+  }
+  .btn.primary{background:linear-gradient(90deg,var(--neon-1),var(--neon-2));color:#05060a}
+  .panel{
+    padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  }
 
-    main {
-      margin-top: 100px;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 20px;
-    }
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .tile{height:140px;border-radius:10px;background-size:cover;background-position:center;position:relative;overflow:hidden}
+  .tile:after{content:"";position:absolute;left:0;right:0;bottom:0;height:36%;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.6))}
+  .tile .tag{position:absolute;left:10px;bottom:10px;font-weight:700;color:#fff;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.25);backdrop-filter: blur(4px);font-size:12px}
 
-    section {
-      margin-bottom: 80px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.7s ease-out;
-    }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* dashboard / cards */
+  .grid-2{display:grid;grid-template-columns:1fr 380px;gap:20px}
+  .infobox{display:flex;flex-direction:column;gap:8px}
+  .muted{color:#9fbcd6;font-size:13px}
+  .big{font-size:20px;font-weight:800;color:var(--neon-2)}
 
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      padding: 25px;
-      margin-bottom: 20px;
-      transition: transform 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
+  footer{padding:40px;text-align:center;color:#7fa7c0;border-top:1px solid rgba(255,255,255,0.02);margin-top:60px}
 
-    footer {
-      text-align: center;
-      padding: 40px;
-      background: #fff;
-      color: #666;
-      font-size: 0.9em;
-    }
+  /* animations */
+  .glow{
+    position:relative;
+  }
+  .glow:before{
+    content:"";position:absolute;inset:-4px;background:linear-gradient(90deg,var(--neon-1),var(--neon-2));filter:blur(18px);opacity:0.25;z-index:-1;border-radius:12px;transform:scale(0.98)
+  }
 
-    .weather, .clock {
-      font-size: 1.2em;
-      margin-top: 10px;
-      color: #0078d4;
-    }
+  /* responsive */
+  @media(max-width:980px){
+    .hero{grid-template-columns:1fr;gap:18px}
+    .gallery{grid-template-columns:repeat(2,1fr)}
+    nav{display:none}
+  }
+  @media(max-width:560px){
+    .gallery{grid-template-columns:1fr}
+    .wrap{margin-top:100px;padding:14px}
+    header{padding:8px 14px}
+  }
 
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-    .tab-btn {
-      padding: 10px 20px;
-      background: #eee;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .tab-btn.active {
-      background: var(--primary);
-      color: white;
-    }
-  </style>
+  /* subtle neon particles background */
+  body:after{
+    content:"";position:fixed;right:-10%;top:-10%;width:60vh;height:60vh;background:
+      radial-gradient(circle at 30% 30%, rgba(0,230,255,0.06), transparent 10%),
+      radial-gradient(circle at 70% 70%, rgba(255,106,0,0.06), transparent 12%);
+    filter: blur(70px);z-index:0;pointer-events:none;
+  }
+
+  /* tiny floating animation */
+  .float {animation:floaty 6s ease-in-out infinite}
+  @keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+</style>
 </head>
 <body>
-  <header>
-    <nav>
-      <h1 onclick="scrollToTop()">CakoWeb</h1>
-      <ul>
-        <li><a href="#home">Ana Sayfa</a></li>
-        <li><a href="#about">Hakkımda</a></li>
-        <li><a href="#blog">Blog</a></li>
-        <li><a href="#contact">İletişim</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <div class="brand" onclick="scrollToTop()">
+    <div class="logo glow">C</div>
+    <div>
+      <div style="font-weight:800;color:#e8faff">CakoWeb</div>
+      <div class="muted" style="font-size:12px;margin-top:2px">Cyber Portfolio</div>
+    </div>
+  </div>
 
-  <main>
-    <section id="home" class="fade">
-      <h2>👋 Hoş Geldin!</h2>
-      <div class="card">
-        <p>Bu site canlı verilerle zenginleştirilmiş örnek bir portfolyo yapısıdır.  
-        HTML + CSS + JS ile tamamen statik ama dinamik hisli bir yapı!</p>
-        <div class="clock" id="clock"></div>
-        <div class="weather" id="weather">Hava durumu yükleniyor...</div>
+  <nav>
+    <a href="#home">Ana</a>
+    <a href="#gallery">Galeri</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#about">Hakkımda</a>
+    <a href="#contact">İletişim</a>
+  </nav>
+</header>
+
+<main class="wrap" id="home">
+  <!-- HERO -->
+  <section class="hero panel float" style="position:relative;z-index:2;">
+    <div class="intro">
+      <h1>Siber Güvenlik · Tasarım · Portfolyo</h1>
+      <p>Neon ışıklar, canlı veriler ve profesyonel his. Aşağı kaydır, galeriyi gör, dashboard'unda bağlanan ziyaretçinin bilgilerini izle.</p>
+      <div class="cta-group">
+        <button class="btn primary" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Galeriye Bak</button>
+        <button class="btn" onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})">Dashboard</button>
       </div>
-    </section>
+      <div style="height:12px"></div>
+      <div class="muted">IP üzerinden bölge: <span id="ip-region" class="big">...yükleniyor</span></div>
+    </div>
 
-    <section id="about" class="fade">
-      <h2>📄 Hakkımda</h2>
-      <div class="card">
-        <p>Ben Cako, web teknolojilerine meraklı bir geliştiriciyim.  
-        Modern frontend trendleri, API entegrasyonları ve UI animasyonlarıyla ilgileniyorum.</p>
-      </div>
-    </section>
-
-    <section id="blog" class="fade">
-      <h2>📝 Blog</h2>
-      <div class="tabs">
-        <div class="tab-btn active" onclick="switchTab('tech')">Teknoloji</div>
-        <div class="tab-btn" onclick="switchTab('life')">Kişisel</div>
-      </div>
-
-      <div id="tech" class="tab-content">
-        <div class="card">
-          <h3>AI & Web Geleceği</h3>
-          <p>Yapay zekâ artık web tasarımını da şekillendiriyor.  
-          Bu yazıda, AI destekli UI trendlerine değiniyoruz.</p>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="panel" style="padding:12px;border-radius:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="muted">Canlı Saat</div>
+            <div id="clock" style="font-weight:900;font-size:18px;color:var(--neon-2)">--:--:--</div>
+            <div id="tz" class="muted" style="font-size:12px;margin-top:4px"></div>
+          </div>
+          <div style="text-align:right">
+            <div class="muted">Hava (yakın)</div>
+            <div id="weather" class="big">Yükleniyor…</div>
+            <div id="weather-desc" class="muted" style="font-size:13px"></div>
+          </div>
         </div>
       </div>
 
-      <div id="life" class="tab-content" style="display:none">
-        <div class="card">
-          <h3>Minimalist Kodlama</h3>
-          <p>Daha az kod, daha fazla etki! Geliştirici hayatında sadeleşmenin gücü.</p>
+      <div class="panel" style="padding:10px;border-radius:14px;">
+        <div class="muted">Hızlı Bilgiler</div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <div class="panel" style="padding:8px;border-radius:10px;background:var(--glass);min-width:140px">
+            <div class="muted">Tarayıcı</div>
+            <div id="uaShort" style="font-weight:700;margin-top:6px">—</div>
+          </div>
+          <div class="panel" style="padding:8px;border-radius:10px;background:var(--glass);min-width:140px">
+            <div class="muted">Çözünürlük</div>
+            <div id="screen" style="font-weight:700;margin-top:6px">—</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section id="contact" class="fade">
-      <h2>✉️ İletişim</h2>
-      <div class="card">
-        <p>Bana ulaşmak istersen:</p>
-        <p><a href="mailto:sen@ornekmail.com">sen@ornekmail.com</a></p>
-        <p><a href="https://github.com/cako27">github.com/cako27</a></p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="panel" style="margin-top:30px">
+    <h2 style="margin:8px 0 12px">Galeri — Cyber · Visuals</h2>
+    <p class="muted" style="margin:0 0 12px">Görseller otomatik çekiliyor (Unsplash sorguları). Eğer istersen bu sorguları `cyberpunk,hacker,cybersecurity` gibi değiştir.</p>
+    <div class="gallery" id="galleryGrid">
+      <!-- tiles inserted by JS -->
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="panel" style="margin-top:30px">
+    <h2 style="margin:8px 0 12px">Dashboard — Bağlanan Ziyaretçi Bilgileri</h2>
+    <div class="grid-2">
+      <div class="panel infobox">
+        <div class="muted">IP Bilgileri</div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="min-width:120px">
+            <div class="muted">IP</div>
+            <div id="ip" class="big">—</div>
+          </div>
+          <div>
+            <div class="muted">Konum</div>
+            <div id="location">—</div>
+            <div id="coords" class="muted" style="font-size:13px"></div>
+          </div>
+        </div>
+
+        <hr style="opacity:0.06;margin:12px 0">
+
+        <div class="muted">Ağ & Sağlayıcı</div>
+        <div id="org">—</div>
+        <div class="muted" style="margin-top:8px">Zaman Dilimi</div>
+        <div id="tz2">—</div>
+
+        <hr style="opacity:0.06;margin:12px 0">
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" onclick="tryGeolocation()">Konum İste (Tarayıcı İzni)</button>
+          <a id="maplink" class="btn" style="text-decoration:none" target="_blank">Haritada Aç</a>
+        </div>
       </div>
-    </section>
-  </main>
 
-  <footer>© 2025 CakoWeb – Tüm Hakları Saklıdır.</footer>
+      <div class="panel">
+        <div class="muted">Detaylı Tarayıcı & Cihaz</div>
+        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+          <div style="min-width:180px">
+            <div class="muted">User-Agent</div>
+            <div id="ua" style="font-size:13px;word-break:break-all">—</div>
+          </div>
+          <div style="min-width:120px">
+            <div class="muted">Platform</div>
+            <div id="platform">—</div>
+          </div>
+          <div style="min-width:120px">
+            <div class="muted">Dil</div>
+            <div id="lang">—</div>
+          </div>
+        </div>
 
-  <script>
-    // Smooth fade-in scroll
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    });
-    sections.forEach(sec => observer.observe(sec));
+        <hr style="opacity:0.06;margin:12px 0">
 
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').textContent =
-        now.toLocaleDateString('tr-TR') + " " + now.toLocaleTimeString('tr-TR');
+        <div class="muted">Gelişmiş</div>
+        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+          <div class="panel" style="padding:10px;border-radius:10px;background:var(--glass)">Cookies: <strong id="cookies">—</strong></div>
+          <div class="panel" style="padding:10px;border-radius:10px;background:var(--glass)">Online: <strong id="onlinestatus">—</strong></div>
+          <div class="panel" style="padding:10px;border-radius:10px;background:var(--glass)">Do Not Track: <strong id="dnt">—</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="panel" style="margin-top:30px">
+    <h2>Hakkımda</h2>
+    <p class="muted">Siber estetik, güvenlik odaklı geliştirme ve görsel tasarım birleşimi. Bu şablon GitHub Pages veya Netlify gibi statik hosting'lerde çalışmak üzere tasarlandı.</p>
+    <div style="height:12px"></div>
+    <div class="panel" style="display:flex;gap:12px;align-items:center">
+      <div style="width:120px;height:120px;border-radius:12px;background:linear-gradient(135deg,var(--neon-1),var(--neon-2));display:flex;align-items:center;justify-content:center;font-weight:900;color:#05060a">C</div>
+      <div>
+        <div style="font-weight:800">Cako — Frontend & Cyber Designer</div>
+        <div class="muted">API entegrasyonları, UI animasyonları, statik deployment.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="panel" style="margin-top:30px">
+    <h2>İletişim</h2>
+    <p class="muted">E-posta: <a href="mailto:sen@ornek.com" style="color:var(--neon-2)">sen@ornek.com</a> · GitHub: <a href="https://github.com/cako27" style="color:var(--neon-1)">github.com/cako27</a></p>
+  </section>
+
+  <footer class="panel">
+    © 2025 CakoWeb — Cyber Portfolio · Tasarım & Kod: Cako
+  </footer>
+</main>
+
+<script>
+/* -------------------------
+   Helper & UI setup
+   ------------------------- */
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function el(id){return document.getElementById(id)}
+
+/* Clock */
+function updateClock(){
+  const now = new Date()
+  el('clock').textContent = now.toLocaleTimeString('tr-TR')
+  el('tz').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || ''
+  el('tz2').textContent = el('tz').textContent
+}
+setInterval(updateClock,1000)
+updateClock()
+
+/* Screen & UA */
+el('screen').textContent = `${screen.width}×${screen.height}`
+el('lang').textContent = navigator.language || navigator.userLanguage || '-'
+el('platform').textContent = navigator.platform || '-'
+el('ua').textContent = navigator.userAgent || '-'
+el('uaShort').textContent = (navigator.userAgent||'').split(')')[0] + ')'
+el('cookies').textContent = navigator.cookieEnabled ? 'Evet' : 'Hayır'
+el('onlinestatus').textContent = navigator.onLine ? 'Online' : 'Offline'
+el('dnt').textContent = navigator.doNotTrack || navigator.msDoNotTrack || '—'
+
+/* -------------------------
+   Fetch IP / Geo + weather
+   ------------------------- */
+/*
+ Using ipapi.co for IP and region info (no API-key required for basic use).
+ Note: ipapi.co has rate limits on free tier. You may substitute your preferred IP-Geolocation API.
+*/
+async function fetchIPInfo(){
+  try{
+    const r = await fetch('https://ipapi.co/json/')
+    if(!r.ok) throw new Error('ipapi error')
+    const data = await r.json()
+    // populate fields
+    el('ip').textContent = data.ip || '—'
+    const place = `${data.city||''}${data.region ? ', '+data.region:''}${data.country_name ? ' / '+data.country_name : ''}`
+    el('location').textContent = place || '—'
+    el('coords').textContent = data.latitude && data.longitude ? `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}` : ''
+    el('org').textContent = data.org || data.network || '—'
+    el('ip-region').textContent = `${data.city||data.region||data.country_name||'Bilinmiyor'}`
+    el('maplink').href = data.latitude && data.longitude ? `https://www.openstreetmap.org/#map=12/${data.latitude}/${data.longitude}` : '#'
+    // weather by coords (Open-Meteo) - approximate
+    if(data.latitude && data.longitude){
+      fetchWeather(data.latitude, data.longitude)
+    } else {
+      el('weather').textContent = '—'
+      el('weather-desc').textContent = ''
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+  }catch(e){
+    console.warn(e)
+    el('ip').textContent = 'Alınamadı'
+    el('location').textContent = 'Bilinmiyor'
+    el('ip-region').textContent = 'Bilinmiyor'
+    el('weather').textContent = 'Hava alınamadı'
+  }
+}
+fetchIPInfo()
 
-    // Weather API (Open-Meteo)
-    async function getWeather() {
-      try {
-        const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=41.0&longitude=29.0&current_weather=true");
-        const data = await res.json();
-        const w = data.current_weather;
-        document.getElementById('weather').textContent =
-          `🌤️ ${w.temperature}°C, Rüzgar: ${w.windspeed} km/s`;
-      } catch {
-        document.getElementById('weather').textContent = "Hava durumu alınamadı.";
-      }
+/* Open-Meteo: no API key, returns current_weather */
+async function fetchWeather(lat, lon){
+  try{
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+    const r = await fetch(url)
+    const data = await r.json()
+    if(data && data.current_weather){
+      const w = data.current_weather
+      el('weather').textContent = `${w.temperature}°C · Rüzgar ${w.windspeed} m/s`
+      el('weather-desc').textContent = `Yön ${w.winddirection}° · Model: Open-Meteo`
+    } else {
+      el('weather').textContent = '—'
+      el('weather-desc').textContent = ''
     }
-    getWeather();
+  }catch(e){
+    console.warn(e)
+    el('weather').textContent = 'Hava alınamadı'
+  }
+}
 
-    // Tabs
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-      document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
-      document.getElementById(tab).style.display = 'block';
-    }
+/* -------------------------
+   Gallery: fetch photos from Unsplash Source (no key)
+   ------------------------- */
+/*
+We use Unsplash Source to pull themed images quickly, e.g.:
+https://source.unsplash.com/featured/800x600?cyberpunk,secuirty,hacker
+That URL returns a fresh photo matching the query.
+*/
+const galleryQueries = [
+  'cyberpunk,city,neon',
+  'cyberpunk,portrait,futuristic',
+  'hacker,cybersecurity,code',
+  'technology,ai,network',
+  'dark,neon,art',
+  'robot,portrait,cyber'
+]
 
-    // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
-  </script>
+function buildGallery(){
+  const grid = el('galleryGrid')
+  grid.innerHTML = ''
+  for(let i=0;i<6;i++){
+    const q = galleryQueries[i % galleryQueries.length]
+    // request sizes with cache-busting to get varied images
+    const url = `https://source.unsplash.com/collection/1111575/800x600?${encodeURIComponent(q)}&sig=${Math.random()*10000|0}`
+    const tile = document.createElement('div')
+    tile.className = 'tile'
+    tile.style.backgroundImage = `url('${url}')`
+    const tag = document.createElement('div')
+    tag.className = 'tag'
+    tag.textContent = q.split(',')[0]
+    tile.appendChild(tag)
+    grid.appendChild(tile)
+  }
+}
+buildGallery()
+
+/* Optional: allow user to refresh gallery */
+document.addEventListener('keydown', (e)=>{ if(e.key==='g') buildGallery() })
+
+/* -------------------------
+   Geolocation (browser) - optional (requires user permission)
+   ------------------------- */
+function tryGeolocation(){
+  if(!navigator.geolocation){
+    alert('Tarayıcı konum API\'sini desteklemiyor.')
+    return
+  }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat = pos.coords.latitude.toFixed(6)
+    const lon = pos.coords.longitude.toFixed(6)
+    el('coords').textContent = `${lat}, ${lon} (prec: ${pos.coords.accuracy}m)`
+    el('maplink').href = `https://www.openstreetmap.org/#map=14/${lat}/${lon}`
+  }, err=>{
+    alert('Konum alınamadı: ' + (err.message || err.code))
+  }, {enableHighAccuracy:true, timeout:10000})
+}
+
+/* -------------------------
+   Small finish touches
+   ------------------------- */
+window.addEventListener('load', ()=> {
+  // entrance animation for sections
+  document.querySelectorAll('section').forEach((s,i)=>{
+    s.style.opacity=0
+    s.style.transform='translateY(16px)'
+    setTimeout(()=>{ s.style.transition='all 700ms cubic-bezier(.2,.9,.3,1)'; s.style.opacity=1; s.style.transform='translateY(0)'; }, 120*i)
+  })
+})
+
+</script>
 </body>
 </html>
